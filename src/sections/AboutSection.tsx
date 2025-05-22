@@ -82,12 +82,12 @@ const AboutSection: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               <div className="bg-primary-900/50 border border-primary-800/50 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">Education</h4>
-                <p className="text-gray-300 text-sm">B.Tech | Artificial Intelligence & Machine Learing<br />St.Martin's Engineering College</p>
+                <p className="text-gray-300 text-sm">B.Tech | Artificial Intelligence & Machine Learing (7.01 CGPA)<br />St.Martin's Engineering College</p>
               </div>
               
               <div className="bg-primary-900/50 border border-primary-800/50 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-2">Education, +2 & School</h4>
-                <p className="text-gray-300 text-sm">+2 at Sri Chaitanya junior College(82%) <br />Sr Prime School(90%)</p>
+                <p className="text-gray-300 text-sm">Intermediate At Sri Chaitanya junior College(82%) <br />Secondary School At Sr Prime School(90%)</p>
               </div>
             </div>
             

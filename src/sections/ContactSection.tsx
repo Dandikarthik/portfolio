@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, MapPin, Mail, Phone } from 'lucide-react';
+import axios from 'axios';
 
 const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -18,44 +19,32 @@ const ContactSection: React.FC = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+
+    try {
+      await axios.post("https://web-production-cf10.up.railway.app/", formData); // change to your deployed URL if needed
       setSubmitSuccess(true);
-      
-      // Reset form after success
-      setTimeout(() => {
-        setSubmitSuccess(false);
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
-        });
-      }, 3000);
-    }, 1500);
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong!");
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitSuccess(false), 3000);
+    }
   };
 
   const contactInfo = [
-    { 
-      icon: MapPin, 
-      title: "Location", 
-      details: "Bichkunda, Telangana, India" 
-    },
-    { 
-      icon: Mail, 
-      title: "Email", 
-      details: "dandisaikarthik@gmail.com" 
-    },
-    { 
-      icon: Phone, 
-      title: "Phone", 
-      details: "+91 9553466446" 
-    }
+    { icon: MapPin, title: "Location", details: "Bichkunda, Telangana, India" },
+    { icon: Mail, title: "Email", details: "dandisaikarthik@gmail.com" },
+    { icon: Phone, title: "Phone", details: "+91 9553466446" }
   ];
 
   return (
@@ -90,7 +79,6 @@ const ContactSection: React.FC = () => {
             transition={{ duration: 0.5 }}
           >
             <h3 className="text-xl font-bold text-white mb-6">Contact Information</h3>
-            
             <div className="space-y-4">
               {contactInfo.map((item, index) => {
                 const Icon = item.icon;
@@ -107,7 +95,7 @@ const ContactSection: React.FC = () => {
                 );
               })}
             </div>
-            
+
             <div className="pt-6">
               <h3 className="text-xl font-bold text-white mb-6">Follow Me</h3>
               <div className="flex gap-4">
@@ -131,7 +119,7 @@ const ContactSection: React.FC = () => {
               </div>
             </div>
           </motion.div>
-          
+
           <motion.div 
             className="md:col-span-3 bg-primary-900/60 border border-primary-800/50 rounded-xl p-6 backdrop-blur-sm"
             initial={{ opacity: 0, x: 50 }}
@@ -140,7 +128,7 @@ const ContactSection: React.FC = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h3 className="text-xl font-bold text-white mb-6">Send Me a Message</h3>
-            
+
             {submitSuccess ? (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -179,7 +167,7 @@ const ContactSection: React.FC = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div>
                   <label htmlFor="subject" className="block text-gray-300 mb-2 text-sm">Subject</label>
                   <input
@@ -193,7 +181,7 @@ const ContactSection: React.FC = () => {
                     placeholder="Project Inquiry"
                   />
                 </div>
-                
+
                 <div>
                   <label htmlFor="message" className="block text-gray-300 mb-2 text-sm">Message</label>
                   <textarea
@@ -207,7 +195,7 @@ const ContactSection: React.FC = () => {
                     placeholder="Tell me about your project..."
                   ></textarea>
                 </div>
-                
+
                 <div>
                   <motion.button
                     type="submit"
